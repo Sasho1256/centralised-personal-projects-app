@@ -6,6 +6,8 @@ import AbstractForm from '@/components/AbstractForm';
 import AbstractResult from '@/components/AbstractResult';
 import { useState } from 'react';
 import { InputField } from '@/types/InputField';
+import { caesarCipher } from '@/utils/caesarCipher';
+import { caesarCipherReverse } from '@/utils/caesarCipherReverse';
 
 export default function ProjectPage() {
     const params = useParams();
@@ -25,7 +27,17 @@ export default function ProjectPage() {
                 ];
             case 'base64decode':
                 return [
-                    { name: 'encodedString', label: 'Plain text', type: 'text' },
+                    { name: 'encodedString', label: 'Encoded string', type: 'text' },
+                ];
+            case 'caesarCipher':
+                return [
+                    { name: 'stringToEncode', label: 'Plain text', type: 'text' },
+                    { name: 'keyLetter', label: 'Key letter', type: 'text' },
+                ];
+            case 'caesarCipherReverse':
+                return [
+                    { name: 'stringToDecode', label: 'Plain text', type: 'text' },
+                    { name: 'keyLetter', label: 'Key letter', type: 'text' },
                 ];
 
             default:
@@ -39,12 +51,16 @@ export default function ProjectPage() {
     const handleSubmit = (values: Record<string, string | number>) => {
         switch (params.id) {
             case 'base64encode':
-                const { stringToEncode } = values;
-                setResult({ Encoded: btoa(String(stringToEncode)) });
+                setResult({ Encoded: btoa(String(values.stringToEncode)) });
                 break;
             case 'base64decode':
-                const { encodedString } = values;
-                setResult({ Decoded: atob(String(encodedString)) });
+                setResult({ Decoded: atob(String(values.encodedString)) });
+                break;
+            case 'caesarCipher':
+                setResult({ Encrypted: caesarCipher(String(values.stringToEncode), String(values.keyLetter)) });
+                break;
+            case 'caesarCipherReverse':
+                setResult({ Encrypted: caesarCipherReverse(String(values.stringToDecode), String(values.keyLetter)) });
                 break;
             default:
                 setResult({ empty: 0 });
