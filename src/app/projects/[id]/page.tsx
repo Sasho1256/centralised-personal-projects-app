@@ -9,6 +9,7 @@ import { InputField } from '@/types/InputField';
 import { caesarCipher } from '@/utils/caesarCipher';
 import { caesarCipherReverse } from '@/utils/caesarCipherReverse';
 import { calc } from '@/utils/calc';
+import { avgSchoolGradesCalc } from '@/utils/avgSchoolGradesCalc';
 
 export default function ProjectPage() {
     const params = useParams();
@@ -44,6 +45,10 @@ export default function ProjectPage() {
                 return [
                     { name: 'input', label: 'Input sequence', type: 'text' },
                 ];
+            case 'avgSchoolGradesCalc':
+                return [
+                    { name: 'input', label: 'Grades', type: 'text' },
+                ];
 
             default:
                 return [
@@ -69,6 +74,9 @@ export default function ProjectPage() {
                 break;
             case 'calc':
                 setResult({ Result: calc(String(values.input)) });
+                break;
+            case 'avgSchoolGradesCalc':
+                setResult(avgSchoolGradesCalc(String(values.input)));
                 break;
             default:
                 setResult({ empty: 0 });
