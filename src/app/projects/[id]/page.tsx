@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { InputField } from '@/types/InputField';
 import { caesarCipher } from '@/utils/caesarCipher';
 import { caesarCipherReverse } from '@/utils/caesarCipherReverse';
+import { calc } from '@/utils/calc';
 
 export default function ProjectPage() {
     const params = useParams();
@@ -39,6 +40,10 @@ export default function ProjectPage() {
                     { name: 'stringToDecode', label: 'Plain text', type: 'text' },
                     { name: 'keyLetter', label: 'Key letter', type: 'text' },
                 ];
+            case 'calc':
+                return [
+                    { name: 'input', label: 'Input sequence', type: 'text' },
+                ];
 
             default:
                 return [
@@ -61,6 +66,9 @@ export default function ProjectPage() {
                 break;
             case 'caesarCipherReverse':
                 setResult({ Encrypted: caesarCipherReverse(String(values.stringToDecode), String(values.keyLetter)) });
+                break;
+            case 'calc':
+                setResult({ Result: calc(String(values.input)) });
                 break;
             default:
                 setResult({ empty: 0 });
