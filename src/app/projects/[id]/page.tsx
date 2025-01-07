@@ -38,7 +38,7 @@ export default function ProjectPage() {
                 ];
             case 'caesarCipherReverse':
                 return [
-                    { name: 'stringToDecode', label: 'Plain text', type: 'text' },
+                    { name: 'stringToDecode', label: 'Caesar cipher code', type: 'text' },
                     { name: 'keyLetter', label: 'Key letter', type: 'text' },
                 ];
             case 'calc':
@@ -51,10 +51,7 @@ export default function ProjectPage() {
                 ];
 
             default:
-                return [
-                    { name: 'num1', label: 'Number 1', type: 'number' },
-                    { name: 'num2', label: 'Number 2', type: 'number' },
-                ];
+                return [];
         }
     })();
 
