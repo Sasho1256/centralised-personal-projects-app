@@ -10,6 +10,7 @@ import { caesarCipher } from '@/utils/caesarCipher';
 import { caesarCipherReverse } from '@/utils/caesarCipherReverse';
 import { calc } from '@/utils/calc';
 import { avgSchoolGradesCalc } from '@/utils/avgSchoolGradesCalc';
+import { batteryHealthCalc } from '@/utils/batteryHealthCalc';
 
 export default function ProjectPage() {
     const params = useParams();
@@ -49,6 +50,11 @@ export default function ProjectPage() {
                 return [
                     { name: 'input', label: 'Grades', type: 'text' },
                 ];
+            case 'batteryHealthCalc':
+                return [
+                    { name: 'designCapacity', label: 'Design capacity WH', type: 'text' },
+                    { name: 'currentCapacity', label: 'Current full charge capacity WH', type: 'text' },
+                ];
 
             default:
                 return [];
@@ -74,6 +80,9 @@ export default function ProjectPage() {
                 break;
             case 'avgSchoolGradesCalc':
                 setResult(avgSchoolGradesCalc(String(values.input)));
+                break;
+            case 'batteryHealthCalc':
+                setResult({ Battery_Health: batteryHealthCalc(Number(values.designCapacity), Number(values.currentCapacity)) + '%' });
                 break;
             default:
                 setResult({ empty: 0 });
