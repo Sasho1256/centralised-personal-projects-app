@@ -11,6 +11,7 @@ import { caesarCipherReverse } from '@/utils/caesarCipherReverse';
 import { calc } from '@/utils/calc';
 import { avgSchoolGradesCalc } from '@/utils/avgSchoolGradesCalc';
 import { batteryHealthCalc } from '@/utils/batteryHealthCalc';
+import { digitSumCalc } from '@/utils/digitSumCalc';
 
 export default function ProjectPage() {
     const params = useParams();
@@ -55,6 +56,10 @@ export default function ProjectPage() {
                     { name: 'designCapacity', label: 'Design capacity WH', type: 'text' },
                     { name: 'currentCapacity', label: 'Current full charge capacity WH', type: 'text' },
                 ];
+            case 'digitSumCalc':
+                return [
+                    { name: 'number', label: 'Number', type: 'number' },
+                ];
 
             default:
                 return [];
@@ -84,6 +89,10 @@ export default function ProjectPage() {
             case 'batteryHealthCalc':
                 setResult({ Battery_Health: batteryHealthCalc(Number(values.designCapacity), Number(values.currentCapacity)) + '%' });
                 break;
+            case 'digitSumCalc':
+                setResult({ Sum: digitSumCalc(Number(values.number)) });
+                break;
+
             default:
                 setResult({ empty: 0 });
                 break;

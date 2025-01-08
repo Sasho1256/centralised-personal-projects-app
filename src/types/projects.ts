@@ -6,5 +6,6 @@ export const projects = [
     { id: 'caesarCipherReverse', name: 'Caesar Cipher Reverse', description: 'Reverses a Caesar Cipher Encryption' },
     { id: 'calc', name: 'Calculator', description: "Write a sequence that ends with a '=' and submit to get a result. Available actions: +, -, *, /, sq, ^" },
     { id: 'avgSchoolGradesCalc', name: 'Average school grades calculator', description: "Calculate the amount of school grades and their average" },
-    { id: 'batteryHealthCalc', name: 'Battery health percentage calculator', description: "Calculate the amount of school grades and their average" },
+    { id: 'batteryHealthCalc', name: 'Battery health percentage calculator', description: "Calculates the battery health percentage of a used battery based on the design and current WH capacity" },
+    { id: 'digitSumCalc', name: 'Digit sum calculator', description: "Adds all digits of a number together" },
 ];
