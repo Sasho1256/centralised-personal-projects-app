@@ -3,16 +3,16 @@ import { InputField } from '@/types/InputField';
 
 type AbstractFormProps = {
     fields: InputField[];
-    onSubmit: (values: Record<string, string | number>) => void;
+    onSubmit: (values: Record<string, string | number | boolean>) => void;
     submitLabel?: string;
 };
 
 const AbstractForm: React.FC<AbstractFormProps> = ({ fields, onSubmit, submitLabel = 'Submit' }) => {
-    const [formState, setFormState] = useState<Record<string, string | number>>(
+    const [formState, setFormState] = useState<Record<string, string | number | boolean>>(
         Object.fromEntries(fields.map((field) => [field.name, field.defaultValue || '']))
     );
 
-    const handleChange = (name: string, value: string | number) => {
+    const handleChange = (name: string, value: string | number | boolean) => {
         setFormState((prev) => ({ ...prev, [name]: value }));
     };
 
@@ -38,6 +38,7 @@ const AbstractForm: React.FC<AbstractFormProps> = ({ fields, onSubmit, submitLab
                 <div key={field.name} style={{ marginBottom: '1.5rem' }}>
                     <label
                         style={{
+                            color: 'black',
                             display: 'block',
                             marginBottom: '0.5rem',
                             fontWeight: 'bold',
@@ -48,11 +49,12 @@ const AbstractForm: React.FC<AbstractFormProps> = ({ fields, onSubmit, submitLab
                     </label>
                     <input
                         type={field.type}
-                        value={formState[field.name]}
+                        value={formState[field.name].toString()}
                         onChange={(e) =>
-                            handleChange(field.name, field.type === 'number' ? Number(e.target.value) : e.target.value)
+                            handleChange(field.name, field.type === 'checkbox' ? e.target.checked : field.type === 'number' ? Number(e.target.value) : e.target.value)
                         }
                         style={{
+                            color: 'black',
                             width: '100%',
                             padding: '0.5rem',
                             borderRadius: '4px',

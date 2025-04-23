@@ -44,8 +44,10 @@ export default function RootLayout({
           style={{
             flex: 1,
             padding: '2rem',
-            maxWidth: '960px',
+            maxWidth: '700px',
             margin: '0 auto',
+            marginTop: '2rem',
+            marginBottom: '2rem',
             backgroundColor: '#fff',
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',

@@ -6,12 +6,9 @@ import AbstractForm from '@/components/AbstractForm';
 import AbstractResult from '@/components/AbstractResult';
 import { useState } from 'react';
 import { InputField } from '@/types/InputField';
-import { caesarCipher } from '@/utils/caesarCipher';
-import { caesarCipherReverse } from '@/utils/caesarCipherReverse';
 import { calc } from '@/utils/calc';
-import { avgSchoolGradesCalc } from '@/utils/avgSchoolGradesCalc';
-import { batteryHealthCalc } from '@/utils/batteryHealthCalc';
-import { digitSumCalc } from '@/utils/digitSumCalc';
+import { avgSchoolGradesCalc, batteryHealthCalc, caesarCipher, caesarCipherReverse, digitSumCalc, passwordGenerator, isPrime, playerPicker, textReverse, coinFlip, rollDice, toCamelCase } from '@/utils/businessFunctions';
+import { hornerFactorization } from '@/utils/horner';
 
 export default function ProjectPage() {
     const params = useParams();
@@ -60,13 +57,50 @@ export default function ProjectPage() {
                 return [
                     { name: 'number', label: 'Number', type: 'number' },
                 ];
+            case 'hornerFactorization':
+                return [
+                    { name: 'coefficients', label: 'Polynomial coefficients (comma separated)', type: 'text' },
+                ];
+            case 'passwordGenerator':
+                return [
+                    { name: 'lower', label: 'Lower case letters', type: 'checkbox' },
+                    { name: 'upper', label: 'Upper case letters', type: 'checkbox' },
+                    { name: 'symbols', label: 'Special symbols', type: 'checkbox' },
+                    { name: 'digits', label: 'Digits', type: 'checkbox' },
+                    { name: 'length', label: 'Password length', type: 'number' },
+                ];
+            case 'primeNumbers':
+                return [
+                    { name: 'number', label: 'Number', type: 'number' },
+                ];
+            case 'playerPicker':
+                return [
+                    { name: 'players', label: 'Players (comma separated)', type: 'text' },
+                    { name: 'pickDirection', label: 'Pick direction', type: 'checkbox' },
+                ];
+            case 'textReverse':
+                return [
+                    { name: 'text', label: 'Text', type: 'text' },
+                ];
+            case 'coinFlip':
+                return [
+                    { name: 'hidden', label: 'Flip', type: 'hidden' },
+                ];
+            case 'rollDice':
+                return [
+                    { name: 'diceCount', label: 'Dice amount', type: 'number', defaultValue: 1 },
+                ];
+            case 'toCamelCase':
+                return [
+                    { name: 'text', label: 'Dice amount', type: 'text' },
+                ];
 
             default:
                 return [];
         }
     })();
 
-    const handleSubmit = (values: Record<string, string | number>) => {
+    const handleSubmit = (values: Record<string, string | number | boolean>) => {
         switch (params.id) {
             case 'base64encode':
                 setResult({ Encoded: btoa(String(values.stringToEncode)) });
@@ -78,7 +112,7 @@ export default function ProjectPage() {
                 setResult({ Encrypted: caesarCipher(String(values.stringToEncode), String(values.keyLetter)) });
                 break;
             case 'caesarCipherReverse':
-                setResult({ Encrypted: caesarCipherReverse(String(values.stringToDecode), String(values.keyLetter)) });
+                setResult({ Decrypted: caesarCipherReverse(String(values.stringToDecode), String(values.keyLetter)) });
                 break;
             case 'calc':
                 setResult({ Result: calc(String(values.input)) });
@@ -91,6 +125,37 @@ export default function ProjectPage() {
                 break;
             case 'digitSumCalc':
                 setResult({ Sum: digitSumCalc(Number(values.number)) });
+                break;
+            case 'hornerFactorization':
+                setResult({ Result: hornerFactorization(String(values.coefficients)) });
+                break;
+            case 'passwordGenerator':
+                const criterias = {
+                    lower: values.lower ? true : false,
+                    upper: values.upper ? true : false,
+                    symbols: values.symbols ? true : false,
+                    digits: values.digits ? true : false,
+                }
+
+                setResult({ Password: passwordGenerator(criterias, Number(values.length)) });
+                break;
+            case 'primeNumbers':
+                setResult({ Is_prime: isPrime(Number(values.number)) });
+                break;
+            case 'playerPicker':
+                setResult(playerPicker(String(values.players), values.pickDirection ? true : false));
+                break;
+            case 'textReverse':
+                setResult(textReverse(String(values.text)));
+                break;
+            case 'coinFlip':
+                setResult(coinFlip());
+                break;
+            case 'rollDice':
+                setResult({ Dice: rollDice(Number(values.diceCount)) });
+                break;
+            case 'toCamelCase':
+                setResult(toCamelCase(String(values.text)));
                 break;
 
             default:
